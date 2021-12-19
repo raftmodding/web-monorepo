@@ -1,0 +1,17 @@
+{
+  /* SERVER */
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "baseUrl": ".",
+    "paths": {
+      "*": [
+        "node_modules/*",
+        "src/types/*"
+      ]
+    }
+  },
+  "include": [
+    "src/**/*"
+  ]
+}

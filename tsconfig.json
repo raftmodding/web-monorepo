@@ -1,11 +1,16 @@
 {
+  /* BASE */
   "compilerOptions": {
-    "target": "esnext",
-    "moduleResolution": "node",
-    "jsx": "preserve",
-    "sourceMap": true,
-    "resolveJsonModule": true,
+    "target": "es6",
+    "module": "commonjs",
+    "strict": true,
     "esModuleInterop": true,
-    "lib": ["esnext", "dom"]
-  }
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+  },
 }
