@@ -1,24 +1,28 @@
 {
-  "name": "@raftmodding/web-monorepo",
+  "name": "@raftmodding/website",
   "private": true,
   "version": "0.0.0",
   "scripts": {
     "build": "npm run build --workspaces",
-    "start": "npm run build && concurrently --kill-others \"npm run start --workspace=@raftmodding/web-frontend\" \"npm run start --workspace=@raftmodding/web-backend\"",
-    "dev": "concurrently --kill-others \"npm run dev --workspace=@raftmodding/web-frontend\" \"npm run dev --workspace=@raftmodding/web-backend\"",
+    "start": "concurrently --kill-others \"npm run start --workspace=@raftmodding/app\" \"npm run start --workspace=@raftmodding/server\"",
+    "dev": "concurrently --kill-others \"npm run dev --workspace=@raftmodding/app\" \"npm run dev --workspace=@raftmodding/server\"",
     "prettier": "npx prettier --write .",
-    "clean": "rimraf \"packages/**/lib\" \"packages/**/*.tsbuildinfo\""
+    "clean": "rimraf \"**/build\" \"**/dist\" \"**/*.tsbuildinfo\"",
+    "lint": ""
   },
   "engines": {
     "node": "16.x",
     "npm": "7.x"
   },
   "workspaces": [
-    "packages/*"
+    "server",
+    "app"
   ],
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.7.0",
+    "@typescript-eslint/parser": "^5.7.0",
     "concurrently": "^6.1.0",
-    "lerna": "^4.0.0",
+    "eslint": "^8.5.0",
     "prettier": "^2.2.1",
     "rimraf": "^2.7.1",
     "typescript": "^4.2.4"

@@ -1,6 +1,0 @@
-{
-  "watch": ["src", "../../.env"],
-  "ext": "ts,json,js,env",
-  "ignore": ["src/**/*.spec.ts"],
-  "exec": "npx -p @babel/core -p @babel/node babel-node -x \".ts\" src/main.ts"
-}
