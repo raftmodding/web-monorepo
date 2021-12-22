@@ -35,7 +35,7 @@
 import { defineComponent, Ref, ref } from 'vue';
 import { useMod } from '../compositions';
 import api from '../modules/api';
-import { state } from '../modules/stateManager';
+import { isSessionExpired, state } from '../modules/stateManager';
 import toaster from '../modules/toaster';
 import Icon from './Icon.vue';
 
@@ -73,6 +73,18 @@ export default defineComponent({
         return;
       }
 
+      if (isSessionExpired()) {
+        toaster.error(`You have to login to like a mod! `);
+        this.$router.push({
+          name: 'signIn',
+          query: {
+            redirect: this.$route.name,
+            paramsStr: JSON.stringify(this.$route.params),
+          },
+        });
+        return;
+      }
+
       if (this.disabled) {
         toaster.error(
           `Please wait ${this.timer / 1000}s before using this feature again`,
@@ -81,13 +93,15 @@ export default defineComponent({
       }
 
       if (!this.isLiked) {
-        this.$emit('like', true);
-        await api.likeMod(this.mod.id);
-        toaster.success(`You liked <b>${this.mod.title}</b>`);
+        if (await api.likeMod(this.mod.id)) {
+          this.$emit('like', true);
+          toaster.success(`You liked <b>${this.mod.title}</b>`);
+        }
       } else {
-        this.$emit('like', false);
-        await api.unlikeMod(this.mod.id);
-        toaster.success(`You <u>no longer</u> like <b>${this.mod.title}</b>`);
+        if (await api.unlikeMod(this.mod.id)) {
+          this.$emit('like', false);
+          toaster.success(`You <u>no longer</u> like <b>${this.mod.title}</b>`);
+        }
       }
 
       this.disabled = true;
@@ -117,7 +131,7 @@ export default defineComponent({
   &.active {
     color: #e74c3c;
     animation-name: beating-heart;
-    animation-duration: 1s;
+    animation-duration: 750ms;
     animation-iteration-count: infinite;
     animation-direction: alternate;
   }

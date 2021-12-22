@@ -53,7 +53,7 @@ import api from '../modules/api';
 export default defineComponent({
   name: 'SignInPage',
   components: { ApiProvidedForm, Icon },
-  setup(props, { emit }) {
+  setup(_props, { emit }) {
     const meta = useActiveMeta();
 
     meta.title = `Sign in`;

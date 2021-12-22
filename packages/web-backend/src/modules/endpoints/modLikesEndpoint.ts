@@ -64,3 +64,16 @@ modLikesEndpoint.delete.auth(async (req, res, context) => {
 
   return context.continue;
 });
+
+modLikesEndpoint.delete.write.before(async (req, res) => {
+  const { userId } = req.body;
+  const modLike = await modLikeModel.findOne({ where: { userId } });
+
+  if (!modLike) {
+    return res.status(404).send({ error: 'mod was never liked by user!' });
+  }
+
+  await modLike.destroy();
+
+  return res.status(200).send({ success: true });
+});
